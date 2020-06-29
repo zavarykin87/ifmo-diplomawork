@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Products</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h1>Добавление продукта</h1>
+    <form action="/products/add" method="post">
+        <input type="text" name="name" placeholder="Введите название продукта" class="form-control"><br>
+        <input type="text" name="price" placeholder="Введите стоимость продукта" class="form-control"><br>
+        <textarea name="description" placeholder="Описание продукта" class="form-control"></textarea><br>
+        <button type="submit" class="btn btn-success">Добавить продукт</button>
+    </form>
+</div>
+
+<div th:insert="blocks/footer :: footer"> </div>
+
+</body>
+</html>

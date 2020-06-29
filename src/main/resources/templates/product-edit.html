@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Edit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h1>Редактирование продукта</h1>
+    <div th:each="el : ${product}">
+        <form method="post">
+            <input type="text" th:value="${el.name}" name="name" placeholder="Введите название продукта" class="form-control"><br>
+            <input type="text" th:value="${el.price}" name="price" placeholder="Введите стоимость продукта" class="form-control"><br>
+            <textarea name="description" placeholder="Описание продукта" class="form-control"  th:text="${el.description}" /><br>
+            <button type="submit" class="btn btn-success">Обновить</button>
+        </form>
+    </div>
+</div>
+
+<div th:insert="blocks/footer :: footer"> </div>
+
+</body>
+</html>

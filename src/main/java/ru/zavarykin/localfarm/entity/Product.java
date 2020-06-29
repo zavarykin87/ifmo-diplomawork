@@ -2,12 +2,10 @@ package ru.zavarykin.localfarm.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "product_table")
 public class Product {
 
     @Id
@@ -20,6 +18,26 @@ public class Product {
 
     @Column(nullable = false)
     private int price;
+
+    @Column(nullable = false, length = 1000)
+    private String description;
+
+    public Product(String name, int price, String description) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+    }
+
+    public Product() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -44,4 +62,5 @@ public class Product {
     public void setPrice(int price) {
         this.price = price;
     }
+
 }
