@@ -9,17 +9,10 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
     private int price;
-
-    @Column(nullable = false, length = 1000)
     private String description;
 
     public Product(String name, int price, String description) {

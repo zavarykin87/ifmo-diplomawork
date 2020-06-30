@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Local Farm</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/">На главную</a>
+        <a class="p-2 text-dark" href="/farmers">Фермеры</a>
+        <a class="p-2 text-dark" href="/products">Продукты</a>
+        <a class="btn btn-outline-primary" href="/login">Войти</a>
+        <a class="btn btn-outline-primary" href="/registration">Регистрация</a>
+    </nav>
+</div>
+
+<div class="container mt-5">
+    <h1>Фермеры</h1>
+    <div th:each="el : ${products}" class="alert alert-info mt-2">
+        <h3 th:text="${el.name}"/>
+        <a th:href="'/products/' + ${el.id}" class="btn btn-warning">Подробнее</a>
+    </div>
+</div>
+
+
+</body>
+</html>

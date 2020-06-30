@@ -45,7 +45,7 @@ public class ProductController {
             return "redirect:/products";
         }
         Optional<Product> product = productRepository.findById(id);
-        ArrayList<Product> res = new ArrayList<>();
+        List<Product> res = new ArrayList<>();
         product.ifPresent(res::add);
         model.addAttribute("product", res);
         return "product-details";
@@ -57,7 +57,7 @@ public class ProductController {
             return "redirect:/products";
         }
         Optional<Product> product = productRepository.findById(id);
-        ArrayList<Product> res = new ArrayList<>();
+        List<Product> res = new ArrayList<>();
         product.ifPresent(res::add);
         model.addAttribute("product", res);
         return "product-edit";
@@ -68,6 +68,7 @@ public class ProductController {
        Product product = productRepository.findById(id).orElseThrow();
        product.setName(name);
        product.setPrice(Integer.parseInt(price));
+       product.setDescription(description);
        productRepository.save(product);
         return "redirect:/products";
     }
