@@ -18,9 +18,11 @@ public class User implements UserDetails{
     private String password;
     @Transient
     private String passwordConfirm;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
     private boolean active;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
