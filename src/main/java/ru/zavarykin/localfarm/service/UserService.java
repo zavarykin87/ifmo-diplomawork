@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
     private EntityManager entityManager;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private BCryptPasswordEncoder encoder; // кодирует пароли
+    private BCryptPasswordEncoder encoder;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
