@@ -50,10 +50,10 @@ public class UserService implements UserDetailsService {
         if (userFromDb != null){
             return false;
         }
-        //Role role = roleRepository.findById(1).get();
-        //user.getRoles().add(role);
+        Role role = roleRepository.findById(1).get();
+        user.getRoles().add(role);
         user.setPassword(encoder.encode(user.getPassword()));
-        //role.getUsers().add(user);
+        role.getUsers().add(user);
         userRepository.save(user);
         return true;
     }
