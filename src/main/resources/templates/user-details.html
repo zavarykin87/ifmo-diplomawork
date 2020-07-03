@@ -17,13 +17,17 @@
 </div>
 
 <div class="container mt-5">
-    <h1>Фермеры</h1>
-    <div th:each="el : ${products}" class="alert alert-info mt-2">
-        <h3 th:text="${el.name}"/>
-        <a th:href="'/products/' + ${el.id}" class="btn btn-warning">Подробнее</a>
+    <div th:each="el : ${user}" class="alert alert-info mt-2">
+        <h1 th:text="${el.username}"/>
+        <th:block th:each="role : ${el.roles}">
+            <p th:text="${role.name}"/>
+        </th:block>
+        <a th:href="'/users/' + ${el.id} + '/edit'" class="btn btn-warning">Редактировать</a><br><br>
+        <form th:action="'/users/' + ${el.id} + '/remove'" method="post">
+            <button class="btn btn-warning" type="submit">Удалить</button>
+        </form>
     </div>
 </div>
-
 
 </body>
 </html>

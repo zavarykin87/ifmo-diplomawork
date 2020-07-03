@@ -10,17 +10,34 @@ import ru.zavarykin.localfarm.entity.Role;
 import ru.zavarykin.localfarm.entity.User;
 import ru.zavarykin.localfarm.repository.RoleRepository;
 import ru.zavarykin.localfarm.repository.UserRepository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 @Service
 public class UserService implements UserDetailsService {
+
     @PersistenceContext
     private EntityManager entityManager;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder encoder;
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public RoleRepository getRoleRepository() {
+        return roleRepository;
+    }
+
+    public BCryptPasswordEncoder getEncoder() {
+        return encoder;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -57,5 +74,7 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return true;
     }
+
+
 }
 

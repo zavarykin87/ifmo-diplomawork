@@ -16,14 +16,16 @@
     </nav>
 </div>
 
-<div class="container mt-5">
-    <h1>Фермеры</h1>
-    <div th:each="el : ${products}" class="alert alert-info mt-2">
-        <h3 th:text="${el.name}"/>
-        <a th:href="'/products/' + ${el.id}" class="btn btn-warning">Подробнее</a>
+<div class="container mt-5 mb-5">
+    <h1>Редактирование пользователя</h1>
+    <div th:each="el : ${user}">
+        <form method="post">
+            <input type="text" th:value="${el.username}" name="name" placeholder="Введите имя пользователя" class="form-control"><br>
+
+            <button type="submit" class="btn btn-success">Обновить</button>
+        </form>
     </div>
 </div>
-
 
 </body>
 </html>

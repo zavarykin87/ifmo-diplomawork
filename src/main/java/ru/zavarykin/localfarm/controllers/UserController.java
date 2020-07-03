@@ -3,53 +3,71 @@ package ru.zavarykin.localfarm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.zavarykin.localfarm.entity.Product;
+import ru.zavarykin.localfarm.entity.Role;
 import ru.zavarykin.localfarm.entity.User;
-import ru.zavarykin.localfarm.service.UserService;
+import ru.zavarykin.localfarm.repository.RoleRepository;
+import ru.zavarykin.localfarm.repository.UserRepository;
 
-import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 
 @Controller
 public class UserController {
-    private UserService userService;
-
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @GetMapping("/users")
+    public String userList(Model model){
+        model.addAttribute("users", userRepository.findAll());
+        return "user-list";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registrationForm(User user){
-        return "registration";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginForm(){
-        return "login";
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String regUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model)
-    {
-        if (bindingResult.hasErrors()){
-            return "registration";
+    @GetMapping("/users/{id}")
+    public String userDetails(@PathVariable(value = "id") int id, Model model){
+        if(!userRepository.existsById(id)){
+            return "redirect:/users";
         }
-        if (!user.getPassword().equals(user.getPasswordConfirm())){
-            model.addAttribute("confirmError", "Пароли не совпадают");
-            return "registration";
-        }
-
-        if (!userService.saveUser(user)){
-            model.addAttribute("usernameError",
-                    "Пользователь с данным логином уже существует");
-            return "registration";
-        }
-        return "redirect:/login";
+        Optional<User> user = userRepository.findById(id);
+        List<User> res = new ArrayList<>();
+        user.ifPresent(res::add);
+        model.addAttribute("user", res);
+        return "user-details";
     }
 
-    @GetMapping("/403")
-    public String error403() {
-        return "/error/403";
+    @GetMapping("/users/{id}/edit")
+    public String userEdit(@PathVariable(value = "id") int id, Model model){
+        if(!userRepository.existsById(id)){
+            return "redirect:/users";
+        }
+        Optional<User> user = userRepository.findById(id);
+        List<User> res = new ArrayList<>();
+        List<Role> rol = new ArrayList<>();
+        rol = roleRepository.findAll();
+        user.ifPresent(res::add);
+        model.addAttribute("user", res);
+        model.addAttribute("roles", rol);
+        return "user-edit";
     }
+
+    @PostMapping("/users/{id}/edit")
+    public String userPostUpdate(@PathVariable(value = "id") int id,
+                                 @RequestParam String name){
+        User user = userRepository.findById(id).orElseThrow();
+        user.setUsername(name);
+        userRepository.save(user);
+        return "redirect:/users";
+    }
+
+
+
 }
