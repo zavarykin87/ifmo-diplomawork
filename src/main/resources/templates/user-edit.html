@@ -21,7 +21,11 @@
     <div th:each="el : ${user}">
         <form method="post">
             <input type="text" th:value="${el.username}" name="name" placeholder="Введите имя пользователя" class="form-control"><br>
-
+            <div th:each="el : ${roles}">
+                <label>
+                    <input type="checkbox" name="role" th:value="${el.name}"><div th:text="${el.name}"></div>
+                </label>
+            </div>
             <button type="submit" class="btn btn-success">Обновить</button>
         </form>
     </div>

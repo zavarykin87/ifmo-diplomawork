@@ -7,16 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.zavarykin.localfarm.entity.Product;
 import ru.zavarykin.localfarm.entity.Role;
 import ru.zavarykin.localfarm.entity.User;
 import ru.zavarykin.localfarm.repository.RoleRepository;
 import ru.zavarykin.localfarm.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 @Controller
@@ -61,9 +57,17 @@ public class UserController {
 
     @PostMapping("/users/{id}/edit")
     public String userPostUpdate(@PathVariable(value = "id") int id,
-                                 @RequestParam String name){
+                                 @RequestParam String name,
+                                 @RequestParam List<String>role){
         User user = userRepository.findById(id).orElseThrow();
         user.setUsername(name);
+        user.getRoles().clear();
+        List<Role> roles = roleRepository.findAll();
+        for (Role role1 : roles){
+            if (role.contains(role1.getName())){
+                user.getRoles().add(role1);
+            }
+        }
         userRepository.save(user);
         return "redirect:/users";
     }
