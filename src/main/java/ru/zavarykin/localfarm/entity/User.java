@@ -16,7 +16,7 @@ public class User implements UserDetails{
     private String password;
     @Transient
     private String passwordConfirm;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
 
