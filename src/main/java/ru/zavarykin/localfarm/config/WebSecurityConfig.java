@@ -14,27 +14,21 @@ import ru.zavarykin.localfarm.service.UserService;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
-
     @Bean // @Bean - указание что объект должен быть сохранен для последующей инициализации
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Override // самый важный метод - тут настраиваем какие пользователи к каким страничкам могут обращаться
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                     .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/registration").not().fullyAuthenticated() // подобную ссылку могут получить неавторизованные пользователи
-                    // доступно только пользователям с ролью ROLE_USER
-//                  .antMatchers("/foruser/**").hasRole("USER")
-                    // доступно только пользователям с ролью ROLE_ADMIN
- //                 .antMatchers("/products/add").hasAnyRole("FARMER", "ADMIN")
-                   .antMatchers("/").permitAll()
+                    .antMatchers("/", "/registration").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()

@@ -1,6 +1,6 @@
 package ru.zavarykin.localfarm.entity;
 
-import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -48,6 +48,5 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return getName();
     }
-
 
 }

@@ -20,7 +20,7 @@
     <h1>Фермеры</h1>
     <div th:each="el : ${farmers}" class="alert alert-info mt-2">
         <h3 th:text="${el.username}"/>
-        <a th:href="'/farmers/' + ${el.id}" class="btn btn-warning">Подробнее</a>
+        <a th:href="'/farmers/' + ${el.id}" class="btn btn-warning">Каталог продуктов</a>
     </div>
 </div>
 

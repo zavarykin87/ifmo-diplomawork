@@ -2,6 +2,7 @@ package ru.zavarykin.localfarm.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +31,13 @@ public class ProductController {
     }
 
     @GetMapping("/products/add")
+    @PreAuthorize("hasAuthority ('ROLE_FARMER')")
     public String productAdd(Model model) {
         return "products-add";
     }
 
     @PostMapping("/products/add")
+    @PreAuthorize("hasAuthority ('ROLE_FARMER')")
     public String productPostAdd(@RequestParam String name, @RequestParam String price, @RequestParam String description,  Model model){
         Product product = new Product(name, Integer.parseInt(price), description);
         productRepository.save(product);
@@ -54,6 +57,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}/edit")
+    @PreAuthorize("hasAuthority ('ROLE_FARMER')")
     public String productEdit(@PathVariable(value = "id") int id,  Model model){
         if(!productRepository.existsById(id)){
             return "redirect:/products";
@@ -66,6 +70,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/{id}/edit")
+    @PreAuthorize("hasAuthority ('ROLE_FARMER')")
     public String productPostUpdate(@PathVariable(value = "id") int id, @RequestParam String name, @RequestParam String price, @RequestParam String description,  Model model){
        Product product = productRepository.findById(id).orElseThrow();
        product.setName(name);
@@ -76,9 +81,11 @@ public class ProductController {
     }
 
     @PostMapping("/products/{id}/remove")
+    @PreAuthorize("hasAuthority ('ROLE_FARMER')")
     public String productPostDelete(@PathVariable(value = "id") int id, Model model){
         Product product = productRepository.findById(id).orElseThrow();
         productRepository.delete(product);
         return "redirect:/products";
     }
 }
+
